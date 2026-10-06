@@ -1,0 +1,9 @@
+[project]
+name = "schemas"
+version = "0.0.0"
+description = "ThreatCode schemas monorepo"
+requires-python = ">=3.12"
+dependencies = []
+
+[tool.uv.workspace]
+members = ["schemas/proxy"]

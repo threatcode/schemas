@@ -1,0 +1,57 @@
+{
+  "$id": "https://github.com/threatcode/schemas/.schemastore/proxy/config.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "oneOf": [
+    {
+      "allOf": [
+        {
+          "properties": {
+            "version": {
+              "const": "0.57.0"
+            }
+          },
+          "required": [
+            "version"
+          ]
+        },
+        {
+          "$ref": "https://raw.githubusercontent.com/threatcode/schemas/proxy-v0.57.0/schemas/proxy/config.schema.json"
+        }
+      ]
+    },
+    {
+      "allOf": [
+        {
+          "oneOf": [
+            {
+              "properties": {
+                "version": {
+                  "type": "string",
+                  "maxLength": 0
+                }
+              },
+              "required": [
+                "version"
+              ]
+            },
+            {
+              "not": {
+                "properties": {
+                  "version": {}
+                },
+                "required": [
+                  "version"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "$ref": "#/oneOf/0/allOf/1"
+        }
+      ]
+    }
+  ],
+  "title": "All Versions for ThreatCode Proxy Configuration",
+  "type": "object"
+}

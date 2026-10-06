@@ -1,0 +1,375 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Schema",
+  "allOf": [
+    {
+      "$ref": "#/definitions/FileParser"
+    }
+  ],
+  "definitions": {
+    "FileParser": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "description": "The version of ThreatCode that configuration targets",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/SemVer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "config": {
+          "description": "Configuration",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ParametersInput"
+            }
+          ]
+        }
+      },
+      "required": [
+        "config"
+      ]
+    },
+    "SemVer": {
+      "type": "string",
+      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$"
+    },
+    "ParametersInput": {
+      "type": "object",
+      "properties": {
+        "data_path": {
+          "description": "Directory to store data",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "cloud": {
+          "description": "Cloud configuration",
+          "allOf": [
+            {
+              "$ref": "#/definitions/CloudInput"
+            }
+          ]
+        },
+        "security": {
+          "description": "Security configuration",
+          "allOf": [
+            {
+              "$ref": "#/definitions/SecurityInput"
+            }
+          ]
+        },
+        "networking": {
+          "description": "Networking configuration",
+          "allOf": [
+            {
+              "$ref": "#/definitions/NetworkingInput"
+            }
+          ]
+        },
+        "project": {
+          "description": "Project configuration",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/ProjectInput"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "plugins": {
+          "description": "Plugins configuration",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/PluginInput"
+          }
+        },
+        "logging": {
+          "description": "Logging configuration",
+          "allOf": [
+            {
+              "$ref": "#/definitions/LoggingInput"
+            }
+          ]
+        },
+        "runtime": {
+          "description": "Runtime configuration",
+          "allOf": [
+            {
+              "$ref": "#/definitions/RuntimeInput"
+            }
+          ]
+        },
+        "strict": {
+          "description": "Strict mode\n\nWhen enabled, the instance will refuse to start if part of the configuration cannot be\nused. For example, if a requested plugin cannot be installed.",
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "CloudInput": {
+      "type": "object",
+      "properties": {
+        "registration_key": {
+          "description": "Registration key\n\nThis is used to automatically register the instance in a workspace.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sync": {
+          "description": "Enable sync with sync server",
+          "type": "boolean",
+          "default": false
+        },
+        "reset_cache": {
+          "description": "Reset the instance cache of cloud data",
+          "type": "boolean",
+          "default": false
+        },
+        "reset_credentials": {
+          "description": "Reset the instance credentials (DANGEROUS)",
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "SecurityInput": {
+      "type": "object",
+      "properties": {
+        "allow_domains": {
+          "description": "Allowed domains for UI",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "allow_guests": {
+          "description": "Allow login as guest",
+          "type": "boolean",
+          "default": false
+        },
+        "render_sandbox": {
+          "description": "Enable sandboxing for the renderer",
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "NetworkingInput": {
+      "type": "object",
+      "properties": {
+        "listeners": {
+          "description": "Listeners configuration",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ListenerInput"
+          }
+        },
+        "invisible": {
+          "description": "Enable invisible mode for all listeners",
+          "type": "boolean",
+          "default": false
+        },
+        "ca": {
+          "description": "CA certificate configuration",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/CAInput"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "ListenerInput": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "description": "Listener address",
+          "type": "string"
+        },
+        "usage": {
+          "description": "Listener usage",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ListenerUsageInput"
+            }
+          ]
+        }
+      },
+      "required": [
+        "address"
+      ]
+    },
+    "ListenerUsageInput": {
+      "oneOf": [
+        {
+          "description": "UI listener",
+          "type": "string",
+          "const": "u_i"
+        },
+        {
+          "description": "Proxy listener",
+          "type": "string",
+          "const": "proxy"
+        },
+        {
+          "description": "Both UI and Proxy listeners",
+          "type": "string",
+          "const": "both"
+        }
+      ]
+    },
+    "CAInput": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "description": "CA certificate path",
+          "type": "string"
+        },
+        "password": {
+          "description": "CA certificate password",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "path"
+      ]
+    },
+    "ProjectInput": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Project name",
+          "type": "string"
+        },
+        "scopes": {
+          "description": "Project scopes",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/ScopeInput"
+          }
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "ScopeInput": {
+      "anyOf": [
+        {
+          "description": "Import direct scope",
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "allowlist": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "denylist": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "name",
+            "allowlist",
+            "denylist"
+          ]
+        }
+      ]
+    },
+    "PluginInput": {
+      "anyOf": [
+        {
+          "description": "Install plugin from store",
+          "type": "object",
+          "properties": {
+            "store": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "store"
+          ]
+        },
+        {
+          "description": "Install plugin from local path",
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "path"
+          ]
+        }
+      ]
+    },
+    "LoggingInput": {
+      "type": "object",
+      "properties": {
+        "debug": {
+          "description": "Record and display debug logs",
+          "type": "boolean",
+          "default": false
+        },
+        "file": {
+          "description": "Enable file logging",
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "RuntimeInput": {
+      "type": "object",
+      "properties": {
+        "safe": {
+          "description": "Enable safe mode",
+          "type": "boolean",
+          "default": false
+        },
+        "parent_pid": {
+          "description": "Parent PID",
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint32",
+          "minimum": 0
+        },
+        "open_browser": {
+          "description": "Open browser",
+          "type": "boolean",
+          "default": false
+        }
+      }
+    }
+  }
+}
