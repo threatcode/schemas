@@ -31,7 +31,7 @@ jobs:
       - name: Publish proxy
         run: |
           pnpm install --frozen-lockfile
-          pnpm --filter schema-proxy publish --access public
+          pnpm --filter schema-proxy publish --access public --no-git-checks
 
   publish-py:
     runs-on: ubuntu-latest
