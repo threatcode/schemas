@@ -1,5 +1,5 @@
 {
-  "name": "@threatcode/schema-proxy",
+  "name": "@threatmap/schema-proxy",
   "version": "0.1.1",
   "description": "ThreatCode Proxy API schemas (GraphQL and OpenAPI)",
   "author": "ThreatCode <dev@khulnasoft.com>",

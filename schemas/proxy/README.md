@@ -12,7 +12,7 @@ This package publishes the latest ThreatCode Proxy API schema artifacts so tools
 Using npm:
 
 ```bash
-npm install @threatcode/schema-proxy
+npm install @threatmap/schema-proxy
 ```
 
 Using Python:
@@ -30,8 +30,8 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 
-const graphqlSchemaPath = require.resolve("@threatcode/schema-proxy/graphql");
-const openApiSchemaPath = require.resolve("@threatcode/schema-proxy/openapi");
+const graphqlSchemaPath = require.resolve("@threatmap/schema-proxy/graphql");
+const openApiSchemaPath = require.resolve("@threatmap/schema-proxy/openapi");
 
 const graphqlSchema = readFileSync(graphqlSchemaPath, "utf8");
 const openApiSchema = readFileSync(openApiSchemaPath, "utf8");
