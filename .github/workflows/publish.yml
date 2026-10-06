@@ -19,8 +19,18 @@ jobs:
       - name: Checkout project
         uses: actions/checkout@v6
 
+      - name: Setup Node.js and pnpm
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Enable pnpm
+        run: corepack enable
+
       - name: Publish proxy
         run: |
+          pnpm install --frozen-lockfile
           pnpm --filter schema-proxy publish --access public
 
   publish-py:

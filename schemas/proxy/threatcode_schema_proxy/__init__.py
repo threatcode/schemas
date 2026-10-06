@@ -4,7 +4,7 @@ from importlib.resources import files
 
 __all__ = ["__version__", "get_graphql_schema", "get_openapi_schema"]
 
-__version__ = "0.58.3"
+__version__ = "0.1.1"
 
 
 def get_graphql_schema() -> str:

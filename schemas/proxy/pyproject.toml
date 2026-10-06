@@ -1,6 +1,6 @@
 [project]
 name = "threatcode-schema-proxy"
-version = "0.58.3"
+version = "0.1.1"
 description = "ThreatCode Proxy API schemas (GraphQL and OpenAPI)"
 readme = "README.md"
 license = { text = "CC-BY-4.0" }
@@ -14,10 +14,6 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["threatcode_schema_proxy"]
-
-[tool.hatch.build.targets.wheel.force-include]
-"schema.graphql" = "threatcode_schema_proxy/schema.graphql"
-"openapi.yaml" = "threatcode_schema_proxy/openapi.yaml"
 
 [tool.hatch.build.targets.sdist]
 include = ["schema.graphql", "openapi.yaml"]
